@@ -1,0 +1,106 @@
+{% extends 'codigoblog/base.html' %}
+{% load static %}
+{% block title %}
+    All Blog
+{% endblock title %}
+
+{% block content %}
+<style type="text/css">
+
+	@media (max-width: 768px) { 
+		.right-column{
+			margin-left: 0px;
+		}
+	}
+
+	@media (min-width: 768px) { 
+		.right-column{
+			margin-left: 20px;
+		}
+	}
+
+	.blog-post-container{
+		margin-bottom: 20px;
+		width: 100%;
+	}
+	.create-post-bar{
+		background-color: #fff;
+		margin-bottom:20px;
+	}
+
+	.left-column{
+		padding:0px;
+	}
+
+	.right-column{
+		padding:0px;
+	}
+	.lead{
+		font-size: 17px;
+	}
+</style>
+
+
+<div class="container">
+
+    <div class="row">
+
+		<div class="col">
+            <form method="GET">
+                <div class='row' style="margin-top:7%; margin-bottom:40px">
+                    {% csrf_token %}
+                    <div class='col'>
+                        <input class="form-control" id= "searchByTag" name='tagq' style="width:300px" type='text' placeholder='Enter Text'>
+                    </div>
+
+                    <div class='col'>
+                        <button type='submit' style="width:100px" text='submit' id="search" class='btn btn-primary'>Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+	<div class="row">
+
+		<div class="left-column col-lg offset-lg-1">
+
+		
+
+			<!-- Blog posts-->
+			{% if blog_posts %}
+				{% for post in blog_posts %}
+					<div class="blog-post-container">
+						{% include 'blog/snippets/blog_post_snippet.html' with blog_post=post %}
+					</div>
+				{% endfor %}
+			{% else %}
+				<div class="blog-post-container">
+					{% include 'blog/snippets/blog_post_snippet.html' with query=query %}
+				</div>
+			{% endif %}
+			<!-- End Blog posts-->
+
+		<!-- Pagination -->
+		{% include 'blog/snippets/blog_post_pagination.html' with blog_posts=blog_posts %}
+
+		</div>
+		<!-- end blog feed -->
+
+
+	
+
+
+
+	</div>
+</div>
+
+<script type="text/javascript">
+    document.getElementById("searchByTag").value="{{query}}"
+
+  </script>
+    
+{% endblock content %}
+    
+    

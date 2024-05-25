@@ -1,0 +1,101 @@
+{% extends 'codigoblog/base.html' %}
+
+{% block title %}
+Detail
+    
+{% endblock title %}
+
+{% block content %}
+
+
+<style type="text/css">
+	.card{
+		max-width: 700px;
+	}
+	.card-body{
+		padding: 20px;
+	}
+</style>
+
+<div class="container">
+	<div class="row">
+
+		<div class="col col-8">
+		
+		<!-- Blog Post -->
+		<div class="card m-auto">
+			<img class="card-img-top" src="{{blog_post.picture.url}}">
+			<div class="card-body mt-2 mb-2">
+			  <h2 class="card-title">{{blog_post.title}}</h2>
+			  <p class="card-text">{{blog_post.body|safe}}</p>
+		
+			</div>
+			<div class="card-footer text-muted">
+				Tags:
+				{% for tag in tags  %}
+				<span class="badge text-bg-dark">{{tag.tag_content}}</span>
+
+				{% endfor %}
+					
+			</div>
+		</div>
+		</div>
+		{% comment %} Add tag system {% endcomment %}
+		<div class="col col-4">
+			<form method="GET" action={% url 'addtag' blog_post.pk %}>
+				{% csrf_token %}
+					<div class="col-auto">
+					  <input type="text" class="form-control" name="tag" id="tag" placeholder="Enter Tag">
+					</div>
+					<div class="col-auto py-2">
+					  <Button  type="submit" class="btn btn-info " >Add Tag</Button>
+					</div>
+				  </form>
+			
+		</div>
+	</div>
+
+	<div class="row">
+		<h3 class="display-3">Comments</h3>
+	</div>
+	
+	{% for comment in comments  %}
+	<div class="row py-3">
+
+	<div class=" col alert alert-dark" role="alert">
+
+		<figure>
+			<blockquote class="blockquote">
+			  <p>{{comment.comment}}</p>
+			</blockquote>
+			<figcaption class="blockquote-footer">
+				{{comment.comment_by.username}} 
+			</figcaption>
+		  </figure>
+	  </div>
+
+	</div>
+	{% endfor %}
+		
+	<div class="row my-3">
+		<div class="col">
+			<form method="GET" action={% url 'addcomment' blog_post.pk %}>
+			{% csrf_token %}
+				<div class="col-auto">
+				  <input type="text" class="form-control" name="comment" id="comment" placeholder="Add Comment">
+				</div>
+				<div class="col-auto py-2">
+				  <Button  type="submit" class="btn btn-primary " >Add Comment</Button>
+				</div>
+			  </form>
+		</div>
+	</div>
+
+</div>
+
+	
+
+{% endblock content %}
+
+    
+    

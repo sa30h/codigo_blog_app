@@ -1,0 +1,16 @@
+{% extends 'codigoblog/base.html' %}
+
+{% block title %}Login{% endblock  %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h3> LOGIN </h3>
+    <form method="POST" class="form-group" style='width:600px'>
+        {% csrf_token %}
+        {{form|crispy}}
+        <p> Don't have an account? Create one <a href="{% url 'signup'%}">here</a></p>
+        <button type="Submit" id="submit" class="btn btn-success">Log in </button>
+    </form>
+
+{% endblock  %}
